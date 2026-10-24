@@ -1,5 +1,14 @@
 # ChurnLens
 
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-1.9-F7931E?logo=scikitlearn&logoColor=white)
+![pandas](https://img.shields.io/badge/pandas-3.0-150458?logo=pandas&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green)
+
+> Churn və propensity modelləri ilə "kimə zəng edək?" sualına cavab. Zəng siyahısının iqtisadiyyatı əsas göstəricidir, AUC deyil.
+
+🎯 **Əsas nəticə:** Telco-da ən yuxarı 10%-ə zəng edəndə churn edənlərin **73.7%**-i tutulur (lift **2.78×**).
+
 ## Problem
 
 ChurnLens bankda müştəri itkisinin (churn) qarşısını almaq üçün qurulub. Nümunə ssenari: bankda 100,000 müştəri var və hamısına tək-tək zəng etmək mümkün deyil, çünki resurs məhduddur. Model hər müştəriyə churn ehtimalı skoru (churn probability score, $p \in [0, 1]$) təyin edir və müştəriləri risk sırasına düzür. Resurslar (zəng mərkəzi, xüsusi kampaniyalar) yalnız ən yuxarı risk qrupuna, məsələn top 10%-ə yönəldilir.
@@ -24,3 +33,13 @@ Necə işlədilir: pip install -r requirements.txt, sonra notebook-ları sırayl
 Metod və nəticələr: Faza 1–8-in markdown nəticələri, əsas cədvəl (Telco və Bank müqayisəsi).
 Məhdudiyyətlər: snapshot data, proxy bölmə, fərziyyəli biznes hesabı (save rate, CLV = aylıq × 12), propensity ≠ uplift, PSI eşikləri sənaye təcrübəsidir.
 Nə deyil: production sistemi deyil, deployment yoxdur, real bank datası yoxdur.
+
+## Nəticələr
+
+![Telco gains curve](reports/figures/telco_gains_curve.png)
+![Bank gains curve](reports/figures/bank_gains_curve.png)
+
+| Layihə | Hədəf | ROC-AUC | Lift@10% |
+|---|---|---|---|
+| 🟦 Telco churn | Churn (26.5%) | 0.842 | 2.78× |
+| 🟩 Bank propensity | Əmanət (11.7%) | 0.766 | 4.12× |
