@@ -18,3 +18,9 @@ ChurnLens-in əsas məqsədi məhz bu üçüncü qrupu ayırmaqdır.
 - **Yanlış mənfi (False Negative, Type II):** Müştəri gedəcəkdi, amma model onu tapmadı. Bankın xərci: müştərinin depozitləri, kredit faizləri və gələcək bütün mənfəəti, yəni CLV (Customer Lifetime Value), tamamilə itirilir. Maliyyət yüksəkdir.
 
 Buna görə modelin uğuru yalnız AUC ilə deyil, bu xərc balansı ilə ölçüləcək.
+
+Data: Telco (Kaggle, blastchar/telco-customer-churn) və Bank Marketing (UCI). Repo-da data yoxdur, data/raw/ altına qoyulmalıdır.
+Necə işlədilir: pip install -r requirements.txt, sonra notebook-ları sırayla işlət.
+Metod və nəticələr: Faza 1–8-in markdown nəticələri, əsas cədvəl (Telco və Bank müqayisəsi).
+Məhdudiyyətlər: snapshot data, proxy bölmə, fərziyyəli biznes hesabı (save rate, CLV = aylıq × 12), propensity ≠ uplift, PSI eşikləri sənaye təcrübəsidir.
+Nə deyil: production sistemi deyil, deployment yoxdur, real bank datası yoxdur.
