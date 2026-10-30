@@ -3,3 +3,5 @@ data/processed/
 .ipynb_checkpoints/
 __pycache__/
 *.pyc
+.pytest_cache/
+*.joblib
