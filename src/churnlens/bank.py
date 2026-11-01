@@ -24,6 +24,9 @@ BANK_CAT = [
 # EV_AZN bu modulda balance proksi üzrə hesablanır və GƏLİR DEYİL:
 # bankın real gəliri marjadır, qalığın özü deyil. Daxili yoxlama üçündür,
 # README-də mütləq AZN kimi göstərilmir.
+# EV_AZN bu modulda balance proksi üzrə hesablanır və GƏLİR DEYİL:
+# bankın real gəliri marjadır, qalığın özü deyil. Daxili yoxlama üçündür,
+# README-də mütləq AZN kimi göstərilmir.
 SAVE_RATE = 0.30
 CALL_COST = 10.0
 
