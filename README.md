@@ -34,15 +34,6 @@ Metod və nəticələr: Faza 1–8-in markdown nəticələri, əsas cədvəl (Te
 Məhdudiyyətlər: snapshot data, proxy bölmə, fərziyyəli biznes hesabı (save rate, CLV = aylıq × 12), propensity ≠ uplift, PSI eşikləri sənaye təcrübəsidir.
 Nə deyil: production sistemi deyil, deployment yoxdur, real bank datası yoxdur.
 
-## Nəticələr
-
-![Telco gains curve](reports/figures/telco_gains_curve.png)
-![Bank gains curve](reports/figures/bank_gains_curve.png)
-
-| Layihə | Hədəf | ROC-AUC | Lift@10% |
-|---|---|---|---|
-| 🟦 Telco churn | Churn (26.5%) | 0.842 | 2.78× |
-| 🟩 Bank propensity | Əmanət (11.7%) | 0.766 | 4.12× |
 ## Necə işlədilir
 
 ```bash
