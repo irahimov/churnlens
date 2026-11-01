@@ -58,6 +58,15 @@ streamlit run app/dashboard.py                 # dashboard
 | 10% | 704 | 0.737 | 0.278 | 2.78 | 3.18 | 150,109 |
 | 20% | 1,408 | 0.666 | 0.501 | 2.51 | 2.79 | 263,807 |
 
+### Bank Marketing (propensity, duration və pdays düzəlişli)
+
+- Hədəf: term deposit (baza 11.7%)
+- ROC-AUC: 0.7655 ± 0.0084 (`duration` çıxarılıb, leakage düzəlişi)
+- AP: 0.4055 ± 0.0162 (baza 0.117)
+- Top 10% (4,521 müştəri): precision 0.4815, recall 0.4116, lift 4.12×
+
+Bank-da lift Telco-dan yüksəkdir, amma bu, baza nisbətinin aşağı olmasından gəlir. Sıralama keyfiyyəti (AUC) Telco-dan aşağıdır, ona görə iki datasetin lift-ini birbaşa müqayisə etmək olmaz. Bu model propensity modelidir, uplift deyil.
+
 ## Dəyər və fərziyyələr
 
 - **Dəyər (Telco):** `MonthlyCharges × 12` illik gəlirdir, lifetime value deyil. Müddət, endirim və mənfəət marjası nəzərə alınmayıb.
