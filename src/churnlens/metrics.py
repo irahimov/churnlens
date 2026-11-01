@@ -30,3 +30,33 @@ def psi(expected, actual, bins=10):
     e = np.clip(e, 1e-6, None)
     a = np.clip(a, 1e-6, None)
     return float(np.sum((a - e) * np.log(a / e)))
+
+
+def value_weighted_lift(y_true, y_proba, value, fraction=0.10):
+    """Top-k-nın tutduğu churn/conversion dəyərinin faizi, sadə lift ilə müqayisə.
+
+    value: hər müştərinin dəyəri (Telco: MonthlyCharges*12, Bank: max(balance,0)).
+    Qaytarır: top-k-da tutulan dəyərin payı, bütün churn/conversion dəyərinə nisbətən,
+    və həmin pay ÷ top-k-nın dəyər payı (lift-in dəyər versiyası).
+    """
+    y_true = np.asarray(y_true)
+    y_proba = np.asarray(y_proba)
+    value = np.asarray(value, dtype=float)
+
+    order = np.argsort(-y_proba, kind="stable")
+    k = int(fraction * len(y_true))
+    top = order[:k]
+
+    captured_value = value[top][y_true[top] == 1].sum()
+    total_positive_value = value[y_true == 1].sum()
+    value_share_captured = captured_value / total_positive_value
+
+    # Təsadüfi seçimdə gözlənilən pay: top-k-nın dəyər payı
+    random_share = fraction
+
+    return {
+        "k": k,
+        "captured_value": float(captured_value),
+        "value_share_captured": float(value_share_captured),
+        "value_weighted_lift": float(value_share_captured / random_share),
+    }

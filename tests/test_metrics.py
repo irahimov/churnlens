@@ -18,3 +18,12 @@ def test_psi_zero_for_identical_distributions():
 def test_psi_detects_shift():
     rng = np.random.default_rng(0)
     assert psi(rng.normal(0, 1, 2000), rng.normal(1, 1, 2000)) > 0.1
+
+
+def test_value_weighted_lift_perfect_top_captures_all_value():
+    y = np.array([1, 1, 0, 0, 0, 0, 0, 0, 0, 0])
+    p = np.array([0.9, 0.8, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1])
+    v = np.array([100, 50, 10, 10, 10, 10, 10, 10, 10, 10], dtype=float)
+    from churnlens.metrics import value_weighted_lift
+    m = value_weighted_lift(y, p, v, fraction=0.2)
+    assert m["value_share_captured"] == 1.0
