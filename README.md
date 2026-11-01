@@ -43,3 +43,45 @@ Nə deyil: production sistemi deyil, deployment yoxdur, real bank datası yoxdur
 |---|---|---|---|
 | 🟦 Telco churn | Churn (26.5%) | 0.842 | 2.78× |
 | 🟩 Bank propensity | Əmanət (11.7%) | 0.766 | 4.12× |
+## Necə işlədilir
+
+```bash
+pip install -r requirements.txt
+PYTHONPATH=src python -m churnlens.train      # model, scored CSV, top-k cədvəli
+PYTHONPATH=src uvicorn churnlens.api:app       # API: GET /health, POST /score
+pytest                                         # testlər
+python sql/run_queries.py                      # DuckDB sorğuları
+streamlit run app/dashboard.py                 # dashboard
+```
+
+`requirements.txt` birbaşa asılılıqları, `requirements.lock.txt` tam pinli siyahını saxlayır.
+
+## Nəticələr (Telco, 5-fold stratified CV, out-of-fold)
+
+- ROC-AUC: 0.8419 ± 0.0120
+- Model B feature-ları: `tenure`, `MonthlyCharges` və 11 kateqorial sütun (`Contract`, `PaymentMethod`, `PaperlessBilling` daxil)
+
+| Top | Zəng sayı | Precision | Recall | Lift | Value lift | Gözlənilən dəyər (AZN) |
+|---|---|---|---|---|---|---|
+| 5% | [..] | [..] | [..] | [..] | [..] | [..] |
+| 10% | [..] | [..] | [..] | [..] | [..] | [..] |
+| 20% | [..] | [..] | [..] | [..] | [..] | [..] |
+
+## Dəyər və fərziyyələr
+
+- **Dəyər (Telco):** `MonthlyCharges × 12` illik gəlirdir, lifetime value deyil. Müddət, endirim və mənfəət marjası nəzərə alınmayıb.
+- **Gözlənilən dəyər:** top-k üzrə `Σ (p × dəyər × SAVE_RATE − CALL_COST)`. `SAVE_RATE = 0.30` və `CALL_COST = 10 AZN` fərziyyədir, sınaqla ölçülməlidir. Nəticəyə görə tune edilməyib.
+- **Value lift:** top-k-nın tutduğu churn-çülərin dəyər payı, təsadüfi seçimdə gözlənilən pay (`fraction`) ilə bölünür. Təsadüfi pay təxminidir, çünki dəyər müştərilər arasında bərabər paylanmır.
+- **Bank dəyəri (planlanıb):** `max(balance, 0)` proxy-si. Mənfi balans overdraft sayılır və 0 qəbul olunur. Bu illik gəlir deyil, anlıq vəziyyətdir.
+
+## Məhdudiyyətlər
+
+- Telco snapshot-dır, zaman sütunu yoxdur. Out-of-time test mümkün deyil.
+- Proxy bölmə (`tenure`) üzrə Faza 8-də kalibrasiya pozulması göstərilib: yeni müştərilərdə ehtimallar aşağı qiymətləndirilir. Bu seqmentdə ehtimal dəyəri xərc hesabında istifadə olunmamalıdır.
+- Public data istifadə olunub, real bank nəticəsi deyil. Xərc və save rate fərziyyədir.
+- Propensity ≠ uplift: yüksək ehtimallı müştərilərin bir hissəsi zəng olmadan da churn etməyəcək. Real təsir A/B test ilə ölçülməlidir.
+- `TotalCharges` modeldə yoxdur, çünki `tenure × MonthlyCharges` ilə təxminən eynidir.
+
+## Nə deyil
+
+Production sistemi deyil: deployment, auth, monitorinq pipeline-ı və model registry yoxdur. API yalnız lokal işlətmək üçündür.
