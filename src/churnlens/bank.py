@@ -21,6 +21,9 @@ BANK_CAT = [
 
 # Telco ilə eyni fərziyyələr. Nəticəyə görə tune edilməyib.
 # Propensity-də SAVE_RATE "zəngdən sonra əmanət açma" ehtimalının fərziyyəsidir.
+# EV_AZN bu modulda balance proksi üzrə hesablanır və GƏLİR DEYİL:
+# bankın real gəliri marjadır, qalığın özü deyil. Daxili yoxlama üçündür,
+# README-də mütləq AZN kimi göstərilmir.
 SAVE_RATE = 0.30
 CALL_COST = 10.0
 
